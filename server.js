@@ -1,0 +1,15 @@
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const sequelize = require("./src/config/database");
+const noteRoutes = require("./src/routes/noteRoutes");
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+app.use("/notes", noteRoutes);
+
+sequelize.sync().then(() => {
+  app.listen(5000, () => console.log("API running on port 5000"));
+});
